@@ -3,6 +3,7 @@ const {sign} = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
 const {json} = require("express");
 const jwt = require("jsonwebtoken");
+const auth = require("../middleware/auth")
 
 exports.registerUser = async (req, res) => {
     try {
@@ -75,8 +76,8 @@ exports.loginUser = async (req, res) => {
             user.token = token;
 
             //user
-            //res.status(200).json(user)
-            res.status(200).send("Successfully logged In")
+            res.status(200).json(user)
+            //res.status(200).send("Successfully logged In")
         }
         else {
             res.status(200).send("Invalid credentials")
@@ -89,3 +90,11 @@ exports.loginUser = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
+exports.welcomeUser = async (req,res) => {
+    try {
+        res.status(200).send("Welcome")
+    }catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
